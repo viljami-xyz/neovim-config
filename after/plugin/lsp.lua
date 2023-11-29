@@ -4,6 +4,8 @@ lsp.preset("recommended")
 
 lsp.ensure_installed({
     "pyright",
+    "ruff_lsp",
+    "pylsp",
 })
 
 
@@ -29,7 +31,6 @@ lsp.setup_nvim_cmp({
 })
 
 lsp.set_preferences({
-    suggest_lsp_servers = false,
     sign_icons = {
         error = 'E',
         warn = 'W',
@@ -53,15 +54,20 @@ lsp.on_attach(function(client, bufnr)
   vim.keymap.set("i", "<C-h>", function() vim.lsp.buf.signature_help() end, opts)
 end)
 
-require('lspconfig').ruff_lsp.setup {
-  on_attach = on_attach,
-  init_options = {
-    settings = {
-      -- Any extra CLI arguments for `ruff` go here.
-      args = {},
-    }
-  }
-}
+require("mason-null-ls").setup({
+    ensure_installed = { "black" }
+})
+
+
+local null_ls = require("null-ls")
+
+null_ls.setup({
+    sources= {
+        null_ls.builtins.formatting.black,
+    },
+})
+
+
 
 lsp.setup()
 
