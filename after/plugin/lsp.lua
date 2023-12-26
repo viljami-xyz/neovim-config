@@ -6,6 +6,8 @@ lsp.ensure_installed({
     "pyright",
     "ruff_lsp",
     "pylsp",
+    "tsserver",
+    "lua"
 })
 
 
