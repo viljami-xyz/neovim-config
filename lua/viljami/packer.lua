@@ -20,7 +20,6 @@ return require('packer').startup(function(use)
 		  vim.cmd('colorscheme rose-pine')
 	  end
   })
-  use 'Mofiqul/dracula.nvim'
 
   use({
       "folke/trouble.nvim",
@@ -52,7 +51,21 @@ return require('packer').startup(function(use)
 	  branch = 'v1.x',
 	  requires = {
 		  -- LSP Support
-		  {'neovim/nvim-lspconfig'},
+		  {'neovim/nvim-lspconfig',
+      opts = {
+        servers={
+            pylsp={
+                settings = {
+                    pylsp={
+                        plugins={
+                            pyflakes = { enabled = false },
+                        },
+                    },
+                },
+            },
+        },
+        },
+    },
 		  {'williamboman/mason.nvim'},
 		  {'williamboman/mason-lspconfig.nvim'},
 
@@ -74,13 +87,7 @@ return require('packer').startup(function(use)
   use("github/copilot.vim")
   use("eandrju/cellular-automaton.nvim")
   use("laytan/cloak.nvim")
-  use{
-      "jose-elias-alvarez/null-ls.nvim",
-      config = function()
-          require("null-ls").setup()
-      end,
-      requires = { "nvim-lua/plenary.nvim" },
-  }
+  use("nvimtools/none-ls.nvim")
   use('jay-babu/mason-null-ls.nvim')
     end)
 
