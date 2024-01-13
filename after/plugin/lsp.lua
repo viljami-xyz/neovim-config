@@ -89,12 +89,11 @@ null_ls.setup({
 		formatting.isort,
 		formatting.ruff,
 		formatting.stylua,
-        formatting.prettierd.with({
-            extra_args = { "--single-quote" },
-        }),
+		formatting.prettierd.with({
+			extra_args = { "--single-quote" },
+		}),
 	},
 })
-
 
 local lspconfig = require("lspconfig")
 
@@ -125,11 +124,12 @@ lspconfig.pylsp.setup({
 
 vim.keymap.set("n", "<leader>fmt", function()
 	vim.lsp.buf.format({
-        filter = function(client) return client.name == "null-ls" end
-    })
+		filter = function(client)
+			return client.name ~= "tsserver" or client.name ~= "volar"
+		end,
+	})
 end)
 
 vim.diagnostic.config({
 	virtual_text = true,
 })
-
