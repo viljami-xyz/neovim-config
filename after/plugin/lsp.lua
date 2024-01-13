@@ -72,6 +72,8 @@ lsp.on_attach(function(client, bufnr)
 	end, opts)
 end)
 
+lsp.setup()
+
 require("mason-null-ls").setup({
 	ensure_installed = { "black" },
 })
@@ -81,17 +83,18 @@ local formatting = null_ls.builtins.formatting
 local diagnostics = null_ls.builtins.diagnostics
 null_ls.setup({
 	sources = {
-		formatting.prettier.with({ extra_args = { "--tab--width=4", "--no-semi", "--single-quote" } }),
 		formatting.black.with({
 			extra_args = { "--line--length=88" },
 		}),
 		formatting.isort,
 		formatting.ruff,
 		formatting.stylua,
+        formatting.prettierd.with({
+            extra_args = { "--single-quote" },
+        }),
 	},
 })
 
-lsp.setup()
 
 local lspconfig = require("lspconfig")
 
@@ -121,11 +124,9 @@ lspconfig.pylsp.setup({
 })
 
 vim.keymap.set("n", "<leader>fmt", function()
-	vim.lsp.buf.format()
-end)
-
-vim.keymap.set("n", "<leader>prt", function()
-   vim.cmd [[:Prettier]]
+	vim.lsp.buf.format({
+        filter = function(client) return client.name == "null-ls" end
+    })
 end)
 
 vim.diagnostic.config({

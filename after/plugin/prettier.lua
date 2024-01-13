@@ -1,7 +1,7 @@
 local prettier = require("prettier")
 
 prettier.setup({
-	bin = "prettier", -- or `'prettierd'` (v0.23.3+)
+	bin = "prettierd", -- or `'prettierd'` (v0.23.3+)
 	filetypes = {
 		"css",
 		"graphql",
@@ -16,6 +16,7 @@ prettier.setup({
 		"typescriptreact",
 		"yaml",
         "vue",
+
 	},
 
 	["null-ls"] = {
@@ -40,14 +41,14 @@ prettier.setup({
 		end_of_line = "lf",
 		html_whitespace_sensitivity = "css",
 		-- jsx_bracket_same_line = false,
-		jsx_single_quote = false,
+		jsx_single_quote = true,
 		print_width = 80,
 		prose_wrap = "preserve",
 		quote_props = "as-needed",
 		semi = true,
-		single_attribute_per_line = false,
-		single_quote = false,
-		tab_width = 2,
+		single_attribute_per_line = true,
+		single_quote = true,
+		tab_width = 4,
 		trailing_comma = "es5",
 		use_tabs = false,
 		vue_indent_script_and_style = false,
