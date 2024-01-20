@@ -90,7 +90,7 @@ null_ls.setup({
 		formatting.ruff,
 		formatting.stylua,
 		formatting.prettierd.with({
-			extra_args = { "--single-quote" },
+			extra_args = { "--single-quote", "--print-width=88" },
 		}),
 	},
 })
