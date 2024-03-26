@@ -75,7 +75,7 @@ end)
 lsp.setup()
 
 require("mason-null-ls").setup({
-	ensure_installed = { "black" },
+	ensure_installed = { "black", "vue-language-server@1.8.27" },
 })
 
 local null_ls = require("null-ls")
@@ -83,11 +83,8 @@ local formatting = null_ls.builtins.formatting
 local diagnostics = null_ls.builtins.diagnostics
 null_ls.setup({
 	sources = {
-		formatting.black.with({
-			extra_args = { "--line--length=88" },
-		}),
+		formatting.black,
 		formatting.isort,
-		formatting.ruff,
 		formatting.stylua,
 		formatting.prettierd.with({
 			extra_args = { "--single-quote", "--print-width=88" },
@@ -114,9 +111,9 @@ lspconfig.pylsp.setup({
 				mccabe = {
 					enabled = false,
 				},
-				pyright = {
-					enabled = false,
-				},
+                pyright = {
+                    enabled = false,    
+                },
 			},
 		},
 	},
@@ -129,6 +126,30 @@ vim.keymap.set("n", "<leader>fmt", function()
 		end,
 	})
 end)
+
+local autocmd_group = vim.api.nvim_create_augroup("Custom auto-commands", { clear = true })
+
+vim.api.nvim_create_autocmd({ "BufWritePost" }, {
+	pattern = { "*.py" },
+	desc = "Auto format python files",
+	callback = function()
+		local fileName = vim.api.nvim_buf_get_name(0)
+		vim.cmd(":silent !ruff format " .. fileName)
+	end,
+	group = autocmd_group,
+})
+
+vim.api.nvim_create_autocmd({ "BufWritePost" }, {
+	pattern = { "*.vue" },
+	desc = "Auto format Vue files",
+	callback = function()
+		local fileName = vim.api.nvim_buf_get_name(0)
+		vim.cmd([[:Prettier]])
+        -- Save file
+        vim.cmd([[:w]])
+	end,
+	group = autocmd_group,
+})
 
 vim.diagnostic.config({
 	virtual_text = true,
