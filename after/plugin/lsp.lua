@@ -7,6 +7,7 @@ lsp.ensure_installed({
 	"ruff_lsp",
 	"pylsp",
 	"tsserver",
+    "volar",
 })
 
 -- Fix Undefined global 'vim'
@@ -118,6 +119,7 @@ lspconfig.pylsp.setup({
 		},
 	},
 })
+
 
 vim.keymap.set("n", "<leader>fmt", function()
 	vim.lsp.buf.format({

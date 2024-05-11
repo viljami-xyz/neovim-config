@@ -17,7 +17,6 @@ prettier.setup({
 		"yaml",
         "vue",
 	},
-
 	["null-ls"] = {
 		condition = function()
 			return prettier.config_exists({
