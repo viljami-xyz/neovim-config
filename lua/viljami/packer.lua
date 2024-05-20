@@ -79,9 +79,5 @@ return require("packer").startup(function(use)
 	use("laytan/cloak.nvim")
 	use("nvimtools/none-ls.nvim")
 	use("jay-babu/mason-null-ls.nvim")
-<<<<<<< HEAD
     use('MunifTanjim/prettier.nvim')
-=======
-	use("MunifTanjim/prettier.nvim")
->>>>>>> 2875987 (Some changes I assume)
 end)
