@@ -4,10 +4,9 @@ lsp.preset("recommended")
 
 lsp.ensure_installed({
 	"pyright",
-	"ruff_lsp",
+	"ruff",
 	"pylsp",
-	"tsserver",
-    "volar",
+	"volar",
 })
 
 -- Fix Undefined global 'vim'
@@ -112,14 +111,13 @@ lspconfig.pylsp.setup({
 				mccabe = {
 					enabled = false,
 				},
-                pyright = {
-                    enabled = false,    
-                },
+				pyright = {
+					enabled = false,
+				},
 			},
 		},
 	},
 })
-
 
 vim.keymap.set("n", "<leader>fmt", function()
 	vim.lsp.buf.format({
@@ -147,12 +145,18 @@ vim.api.nvim_create_autocmd({ "BufWritePost" }, {
 	callback = function()
 		local fileName = vim.api.nvim_buf_get_name(0)
 		vim.cmd([[:Prettier]])
-        -- Save file
-        vim.cmd([[:w]])
+		-- Save file
+		vim.cmd([[:w]])
 	end,
 	group = autocmd_group,
 })
 
 vim.diagnostic.config({
 	virtual_text = true,
+})
+
+vim.g.copilot_no_tab_map = true
+vim.keymap.set("i", "<C-J>", 'copilot#Accept("\\<CR>")', {
+	expr = true,
+	replace_keycodes = false,
 })
